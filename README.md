@@ -12,6 +12,7 @@ First create a Firebase App from firebase console (https://console.firebase.goog
 npm install -g firebase-tools
 firebase login
 ```
+Change Firebase configuration inside /public/js/messagingBasicSetup.js.
 
 Clone the repository:
 ```
