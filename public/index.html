@@ -1,0 +1,116 @@
+<html>
+
+<head>
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--Import materialize.css-->
+  <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"
+    media="screen,projection" />
+  <!-- custom styles -->
+  <link type="text/css" rel="stylesheet" href="/assets/css/style.css" />
+
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!--Frontend libraries for visualization-->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+  <script type="text/javascript" src="/assets/js/external/notifier.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
+
+  <!--Scripts that handle push notifications-->
+  <script type="text/javascript" src="/assets/js/messagingBasicSetup.js"></script>
+  <script type="text/javascript" src="/assets/js/notificationHandlers.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.3.1/firebase.js"></script>
+
+  <!--Sending push notification-->
+  <script type="text/javascript" src="/assets/js/notificationSender.js"></script>
+
+
+  <!-- Service worker registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js', { scope: '/' })
+          .then(function (reg) {
+            const tokenAction = (token) => {
+              document.getElementById('messagingKey').value = token
+            };
+            //defined in messagingBasicSetup.js
+            startNotifications(reg, tokenAction, browserNotificationHandler);
+          }).catch(function (error) {
+            console.log('Registration failed with ' + error);
+          });
+      });
+    }
+  </script>
+
+  <!--Clipboard library init-->
+  <script>
+    window.addEventListener('load', () => {
+      new Clipboard('#btnCpy');
+      $('#modalNotification').modal({
+        dismissible: false,
+        opacity: 0
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <div class="holder">
+
+    <!--Card with registration key-->
+    <div class="col s12 m7 messagingKeyCard">
+      <div class="card horizontal">
+        <div class="card-stacked blue darken-1 white-text">
+          <div class="card-content">
+            <p class="card-title">Your registration key:
+              <p>
+                <input id="messagingKey"></input><br>
+                <button id="btnCpy" class="waves-effect waves-blue btn red accent-1 white-text" data-clipboard-target="#messagingKey">COPY</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Card with form-->
+    <div class="col s12 m7 messagingKeyCard">
+      <div class="card horizontal">
+        <div class="card-stacked">
+          <div class="card-content">
+            <span class="card-title">Send notification</span>
+            <div class="row">
+              <!--Defined in notificationSender.js-->
+              <form class="col s12" onsubmit="sendNotification(this)" action="#">
+                <div class="row">
+                  <div class="input-field col s6">
+                    <input id="notificationTitle" type="text" class="validate">
+                    <label for="notificationTitle">Notification title</label>
+                  </div>
+                  <div class="input-field col s6">
+                    <input id="notificationBody" type="text" class="validate">
+                    <label for="notificationBody">Notification body</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <input id="notificationRecipient" type="text" class="validate">
+                    <label for="notificationRecipient">To (registration key)</label>
+                  </div>
+                </div>
+                <div class="input-field col s12">
+                  <label for="siteBody">Site body</label>
+                  <textarea id="siteBody" class="materialize-textarea"></textarea>
+                </div>
+                <button class="btn waves-effect waves-light blue darken-1" type="submit" name="action">
+                  Submit<i class="material-icons right">send</i>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

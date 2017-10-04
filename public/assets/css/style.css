@@ -1,0 +1,16 @@
+.holder {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.bold {
+    font-weight: 600;
+}
+
+.customToast {
+    white-space: normal;
+}
+
+.customToast p {
+    display: block;
+}

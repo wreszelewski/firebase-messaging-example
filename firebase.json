@@ -1,0 +1,18 @@
+{
+  "hosting": {
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [{
+        "source": "/notification/**",
+        "function": "notificationPage"
+    },
+    {
+        "source": "/sendNotification**",
+        "function": "sendNotification"
+    }]
+  }
+}
