@@ -20,11 +20,6 @@ git clone https://github.com/wreszelewski/firebase-messaging-example.git
 cd firebase-messaging-example
 ```
 
-Initialize your site:
-```
-firebase init
-```
-
 Run locally (not tested):
 ```
 firebase serve --only functions,hosting
