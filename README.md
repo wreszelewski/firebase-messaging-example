@@ -3,6 +3,7 @@ Implementation of PWA push notifications with Firabase and workbox-sw library.
 
 Features:
 * Sending and receiving device <-> device notifications,
+* Topic messaging,
 * Always Clickable Push - background notification that after it's received it can be opened even without network connection.
 
 ## Running
@@ -18,11 +19,6 @@ Clone the repository:
 ```
 git clone https://github.com/wreszelewski/firebase-messaging-example.git
 cd firebase-messaging-example
-```
-
-Initialize your site:
-```
-firebase init
 ```
 
 Run locally (not tested):
@@ -44,6 +40,10 @@ firebase login
 ### Device <-> device communication
 It's a basic type of communication in Firebase. Code inside /public/assets/js/messagingBasicSetup.js is responsible for initializing this type of communication.
 Code inside /public/assets/js/notificationSender.js and /functions/index.js#16 defines how to send notifications.
+
+### Topic messaging
+You can subscribe and send messages to topics. Code inside /public/assets/js/messagingTopicSetup.js and functions/index.js is responsible for managing client topic subscriptions.
+Code inside /public/assets/js/notificationSender.js and /functions/index.js defines how to send notifications to topics.
 
 ### Always clickable push
 This feature uses service worker cache to store content from background notification URL. After notification is received service worker downloads content and stores it in cache.

@@ -14,3 +14,42 @@
 .customToast p {
     display: block;
 }
+
+.topicSwitches {
+    margin-top: 2em;
+    clear: both;
+}
+
+.switch {
+    float: left;
+    width: 33%;
+    margin-top: 1em;
+}
+
+.switch label {
+    font-size: 1.3em;
+}
+
+.switch label input[type=checkbox]:checked+.lever-red {
+    background-color: #FF8A80;
+}
+  
+.switch label input[type=checkbox]:checked+.lever-red:after {
+    background-color: #FF8A80;
+}
+
+.switch label input[type=checkbox]:checked+.lever-blue {
+    background-color: #1E88E5;
+}
+  
+.switch label input[type=checkbox]:checked+.lever-blue:after {
+    background-color: #1E88E5;
+}
+
+.card-action {
+    width: 70%;
+}
+
+.topicSend {
+    margin-top: 2em;
+}

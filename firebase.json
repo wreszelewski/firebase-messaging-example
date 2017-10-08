@@ -11,8 +11,20 @@
         "function": "notificationPage"
     },
     {
-        "source": "/sendNotification**",
-        "function": "sendNotification"
+        "source": "/sendSingleNotification**",
+        "function": "sendSingleNotification"
+    },
+    {
+      "source": "/subscribeToTopic**",
+      "function": "subscribeToTopic"
+    },
+    {
+      "source": "/unsubscribeFromTopic**",
+      "function": "unsubscribeFromTopic"
+    },
+    {
+      "source": "/sendNotificationToTopic**",
+      "function": "sendNotificationToTopic"
     }]
   }
 }

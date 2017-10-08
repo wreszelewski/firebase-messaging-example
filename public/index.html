@@ -20,6 +20,7 @@
 
   <!--Scripts that handle push notifications-->
   <script type="text/javascript" src="/assets/js/messagingBasicSetup.js"></script>
+  <script type="text/javascript" src="/assets/js/messagingTopicSetup.js"></script>  
   <script type="text/javascript" src="/assets/js/notificationHandlers.js"></script>
   <script src="https://www.gstatic.com/firebasejs/4.3.1/firebase.js"></script>
 
@@ -53,6 +54,13 @@
         dismissible: false,
         opacity: 0
       });
+      const topics = Array.from(document.getElementsByClassName('topicSwitch'));
+      topics.forEach((topic) => {
+        topic.onchange = manageTopicSubscriptions;
+        if(localStorage.getItem(topic.name)) {
+          topic.checked = true;
+        }
+      })
     });
   </script>
 </head>
@@ -65,10 +73,38 @@
       <div class="card horizontal">
         <div class="card-stacked blue darken-1 white-text">
           <div class="card-content">
-            <p class="card-title">Your registration key:
-              <p>
+            <p class="card-title">Your registration key:</p>
                 <input id="messagingKey"></input><br>
                 <button id="btnCpy" class="waves-effect waves-blue btn red accent-1 white-text" data-clipboard-target="#messagingKey">COPY</button>
+                <div class="row">
+                <div class="topicSwitches col s6">
+                  <p class="card-title">Your topics:</p>                
+                  <div class="switch white-text">
+                    <label class="white-text">
+                      Apples
+                      <input name="apples" class="topicSwitch" type="checkbox">
+                      <span class="lever lever-red"></span>
+                      
+                    </label>
+                  </div>
+                  <div class="switch white-text">
+                    <label class="white-text">
+                      Oranges
+                      <input name="oranges" class="topicSwitch" type="checkbox">
+                      <span class="lever lever-red"></span>
+                      
+                    </label>
+                  </div>
+                  <div class="switch white-text">
+                    <label class="white-text">
+                      Bananas
+                      <input name="bananas" class="topicSwitch" type="checkbox">
+                      <span class="lever lever-red"></span>
+                      
+                    </label>
+                  </div>
+                </div>
+                </div>
           </div>
         </div>
       </div>
@@ -82,7 +118,7 @@
             <span class="card-title">Send notification</span>
             <div class="row">
               <!--Defined in notificationSender.js-->
-              <form class="col s12" onsubmit="sendNotification(this)" action="#">
+              <form class="col s12" action="javascript:void(0);" id="notificationForm">
                 <div class="row">
                   <div class="input-field col s6">
                     <input id="notificationTitle" type="text" class="validate">
@@ -92,18 +128,50 @@
                     <input id="notificationBody" type="text" class="validate">
                     <label for="notificationBody">Notification body</label>
                   </div>
-                  <div class="input-field col s12">
-                    <input id="notificationRecipient" type="text" class="validate">
-                    <label for="notificationRecipient">To (registration key)</label>
-                  </div>
+                  
                 </div>
                 <div class="input-field col s12">
                   <label for="siteBody">Site body</label>
                   <textarea id="siteBody" class="materialize-textarea"></textarea>
                 </div>
-                <button class="btn waves-effect waves-light blue darken-1" type="submit" name="action">
-                  Submit<i class="material-icons right">send</i>
+                <div class="card-action">
+                <div class="input-field col s12">
+                  <input id="notificationRecipient" type="text" class="validate">
+                  <label for="notificationRecipient">To (registration key)</label>
+                </div>
+                <button class="btn waves-effect waves-light blue darken-1" onClick="sendNotification()">
+                  Send to single recipient<i class="material-icons right">send</i>
                 </button>
+                <div class="topicSwitches s12">
+                  <div class="switch">
+                    <label>
+                      Apples
+                      <input name="apples" class="topicSelector" type="checkbox">
+                      <span class="lever lever-blue"></span>
+                      
+                    </label>
+                  </div>
+                  <div class="switch">
+                    <label>
+                      Oranges
+                      <input name="oranges" class="topicSelector" type="checkbox">
+                      <span class="lever lever-blue"></span>
+                      
+                    </label>
+                  </div>
+                  <div class="switch">
+                    <label>
+                      Bananas
+                      <input name="bananas" class="topicSelector" type="checkbox">
+                      <span class="lever lever-blue"></span>
+                      
+                    </label>
+                  </div>
+                </div>
+                <button class="btn waves-effect waves-light blue darken-1 topicSend" onClick="sendNotificationToTopics()" name="topicSend">
+                  Send to topics<i class="material-icons right">send</i>
+                </button>
+                </div>
               </form>
             </div>
           </div>
